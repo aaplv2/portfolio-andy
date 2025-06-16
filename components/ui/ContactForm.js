@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ContactForm() {
   const [formStatus, setFormStatus] = useState({
@@ -9,8 +9,82 @@ export default function ContactForm() {
     visible: false,
   });
 
+  const validateField = (field) => {
+    const value = field.value.trim();
+    let isValid = true;
+    let errorMessage = "";
+
+    switch (field.type) {
+      case "email":
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        isValid = emailRegex.test(value);
+        errorMessage = "Please enter a valid email address";
+        break;
+      case "text":
+        isValid = value.length >= 2;
+        errorMessage = "This field must be at least 2 characters long";
+        break;
+      default:
+        isValid = value.length > 0;
+        errorMessage = "This field is required";
+    }
+
+    showFieldValidation(field, isValid, errorMessage);
+    return isValid;
+  };
+
+  const clearFieldError = (field) => {
+    const existingError = field.parentNode.querySelector(".error-message");
+    if (existingError) {
+      existingError.remove();
+    }
+    field.classList.remove("border-red-500", "border-green-500");
+  };
+
+  const showFieldValidation = (field, isValid, errorMessage) => {
+    clearFieldError(field);
+
+    if (!isValid) {
+      field.classList.add("border-red-500");
+      const errorDiv = document.createElement("div");
+      errorDiv.className =
+        "error-message text-red-400 text-sm mt-2 flex items-center space-x-2";
+      errorDiv.innerHTML = `
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>${errorMessage}</span>
+      `;
+      field.parentNode.appendChild(errorDiv);
+    } else {
+      field.classList.add("border-green-500");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    // Validate all fields
+    const inputs = e.target.querySelectorAll("input, textarea");
+    let isFormValid = true;
+
+    inputs.forEach((input) => {
+      if (!validateField(input)) {
+        isFormValid = false;
+      }
+    });
+
+    if (!isFormValid) {
+      setFormStatus({
+        message: "Please correct the errors above.",
+        type: "error",
+        visible: true,
+      });
+      return;
+    }
 
     setFormStatus({
       message: "Sending message...",
@@ -18,8 +92,15 @@ export default function ContactForm() {
       visible: true,
     });
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Simulate form submission
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          console.log("Form submitted:", data);
+          resolve();
+        }, 2000);
+      });
+
       setFormStatus({
         message: "Message sent successfully! I'll get back to you soon.",
         type: "success",
@@ -28,11 +109,48 @@ export default function ContactForm() {
 
       e.target.reset();
 
+      // Clear all field validations
+      inputs.forEach((input) => {
+        clearFieldError(input);
+      });
+
       setTimeout(() => {
         setFormStatus({ message: "", type: "", visible: false });
       }, 5000);
-    }, 2000);
+    } catch (error) {
+      setFormStatus({
+        message: "Failed to send message. Please try again.",
+        type: "error",
+        visible: true,
+      });
+    }
   };
+
+  useEffect(() => {
+    const form = document.getElementById("contact-form");
+    if (!form) return;
+
+    // Real-time validation
+    const handleFieldBlur = (e) => {
+      if (e.target.matches("input, textarea")) {
+        validateField(e.target);
+      }
+    };
+
+    const handleFieldInput = (e) => {
+      if (e.target.matches("input, textarea")) {
+        clearFieldError(e.target);
+      }
+    };
+
+    form.addEventListener("blur", handleFieldBlur, true);
+    form.addEventListener("input", handleFieldInput, true);
+
+    return () => {
+      form.removeEventListener("blur", handleFieldBlur, true);
+      form.removeEventListener("input", handleFieldInput, true);
+    };
+  }, []);
 
   const getStatusIcon = (type) => {
     const icons = {

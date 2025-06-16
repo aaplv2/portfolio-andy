@@ -1,21 +1,46 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import MobileMenuButton from "./ui/MobileMenuButton"
+import { useState, useEffect } from "react";
+import MobileMenuButton from "./ui/MobileMenuButton";
 
 export default function Navigation() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { href: "#about", label: "About" },
     { href: "#projects", label: "Projects" },
     { href: "#contact", label: "Contact" },
-  ]
+  ];
+
+  useEffect(() => {
+    // Smooth scrolling for navigation links
+    const handleNavClick = (e) => {
+      if (e.target.classList.contains("nav-link")) {
+        e.preventDefault();
+        const targetId = e.target.getAttribute("href").substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+        // Close mobile menu if open
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleNavClick);
+
+    return () => {
+      document.removeEventListener("click", handleNavClick);
+    };
+  }, []);
 
   return (
     <nav className="container mx-auto px-6 py-4">
       <div className="flex justify-between items-center">
-        <div className="text-xl font-bold text-accent-orange">Andy.</div>
+        <div className="text-xl font-bold text-accent-orange">Portfolio</div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8">
@@ -27,7 +52,10 @@ export default function Navigation() {
         </div>
 
         {/* Mobile Menu Button */}
-        <MobileMenuButton isOpen={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
+        <MobileMenuButton
+          isOpen={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        />
       </div>
 
       {/* Mobile Navigation Menu */}
@@ -39,7 +67,6 @@ export default function Navigation() {
                 key={link.href}
                 href={link.href}
                 className="nav-link text-center py-2"
-                onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
               </a>
@@ -48,5 +75,5 @@ export default function Navigation() {
         </div>
       )}
     </nav>
-  )
+  );
 }

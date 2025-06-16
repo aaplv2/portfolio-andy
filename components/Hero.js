@@ -1,12 +1,56 @@
-"use client"
+"use client";
 
-import CVDownloadButtons from "./ui/CVDownloadButtons"
-import SocialLinks from "./ui/SocialLinks"
-import AnimatedBackground from "./ui/AnimatedBackground"
+import { useEffect } from "react";
+import CVDownloadButtons from "./ui/CVDownloadButtons";
+import SocialLinks from "./ui/SocialLinks";
+import AnimatedBackground from "./ui/AnimatedBackground";
 
 export default function Hero() {
+  useEffect(() => {
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-fade-in-up");
+        }
+      });
+    }, observerOptions);
+
+    // Observe hero section for animations
+    const heroSection = document.getElementById("hero");
+    if (heroSection) {
+      observer.observe(heroSection);
+    }
+
+    // Parallax effects for background elements
+    const handleParallax = () => {
+      const scrolled = window.pageYOffset;
+      const parallaxElements = document.querySelectorAll(".animate-float");
+
+      parallaxElements.forEach((element, index) => {
+        const speed = 0.5 + index * 0.1;
+        element.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    };
+
+    window.addEventListener("scroll", handleParallax);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleParallax);
+    };
+  }, []);
+
   return (
-    <section id="hero" className="pt-20 min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section
+      id="hero"
+      className="pt-20 min-h-screen flex items-center justify-center relative overflow-hidden"
+    >
       <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950"></div>
 
       <AnimatedBackground />
@@ -16,12 +60,12 @@ export default function Hero() {
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
             <span className="text-white block">Hello, I'm</span>
             <span className="text-accent-orange block bg-gradient-to-r from-accent-orange to-accent-orange/80 bg-clip-text text-transparent">
-              Andrés Pardo
+              Your Name
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Web Developer / Sound Engineer 
+            Full Stack Developer & Creative Problem Solver
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
@@ -31,5 +75,5 @@ export default function Hero() {
         </div>
       </div>
     </section>
-  )
+  );
 }

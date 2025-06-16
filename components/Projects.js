@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import ProjectCard from "./ui/ProjectCard";
 
 export default function Projects() {
@@ -29,6 +30,33 @@ export default function Projects() {
       tech: ["Next.js", "TypeScript", "Prisma", "MySQL"],
     },
   ];
+
+  useEffect(() => {
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-fade-in-up");
+        }
+      });
+    }, observerOptions);
+
+    // Observe projects section and project cards
+    const projectsSection = document.getElementById("projects");
+    const projectCards = document.querySelectorAll(".project-card");
+
+    if (projectsSection) observer.observe(projectsSection);
+    projectCards.forEach((card) => observer.observe(card));
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <section id="projects" className="py-24 bg-gray-900">
