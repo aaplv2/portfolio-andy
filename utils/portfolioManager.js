@@ -56,38 +56,37 @@ class Navigation extends PortfolioComponent {
   toggleMobileMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
     console.log("Mobile menu toggled:", this.mobileMenuOpen);
-    // Add mobile menu implementation here
   }
 }
 
-// Projects Component
+// Projects Component - Updated with real images
 class ProjectsSection extends PortfolioComponent {
   constructor() {
     super("projects-container");
     this.projects = [
       {
-        title: "E-Commerce Platform",
+        title: "Archivo Jazz",
         description:
-          "A modern full-stack e-commerce solution with real-time inventory management, secure payments, and responsive design.",
-        url: "https://example-ecommerce.com",
-        image: "/placeholder.svg?height=250&width=400",
-        tech: ["React", "Node.js", "MongoDB", "Stripe"],
+          "A comprehensive jazz music archive platform featuring artist profiles, album collections, and interactive listening experiences with curated playlists.",
+        url: "https://example-archivo-jazz.com",
+        image: "/archivo-jazz.png",
+        tech: ["React", "Node.js", "MongoDB", "Audio API"],
       },
       {
-        title: "Task Management App",
+        title: "Birdex",
         description:
-          "Collaborative project management tool with real-time updates, team collaboration features, and intuitive drag-and-drop interface.",
-        url: "https://example-taskapp.com",
-        image: "/placeholder.svg?height=250&width=400",
-        tech: ["Vue.js", "Express", "Socket.io", "PostgreSQL"],
+          "Bird identification and tracking application with AI-powered species recognition, location mapping, and community-driven bird watching features.",
+        url: "https://example-birdex.com",
+        image: "/birdex.jpg",
+        tech: ["Vue.js", "Python", "TensorFlow", "PostgreSQL"],
       },
       {
-        title: "Weather Dashboard",
+        title: "School Management System",
         description:
-          "Interactive weather application with detailed forecasts, interactive maps, and customizable alerts for multiple locations.",
-        url: "https://example-weather.com",
-        image: "/placeholder.svg?height=250&width=400",
-        tech: ["Next.js", "TypeScript", "Chart.js", "Weather API"],
+          "Complete educational management platform with student enrollment, grade tracking, attendance monitoring, and parent-teacher communication tools.",
+        url: "https://example-school.com",
+        image: "/school.jpg",
+        tech: ["Next.js", "TypeScript", "Prisma", "MySQL"],
       },
     ];
   }
@@ -102,11 +101,28 @@ class ProjectsSection extends PortfolioComponent {
         index * 0.2
       }s">
         <div class="relative overflow-hidden">
-          <img src="${project.image}" alt="${
-          project.title
-        }" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+          <img 
+            src="${project.image}" 
+            alt="${project.title} project screenshot" 
+            class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
+            loading="lazy"
+            onerror="this.src='/placeholder.svg?height=250&width=400'; this.alt='${
+              project.title
+            } - Image not available'"
+          >
           <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          
+          <!-- Image overlay with project info -->
+          <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div class="text-center text-white p-4">
+              <svg class="w-12 h-12 mx-auto mb-2 text-accent-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
+              <p class="text-sm font-medium">View Project</p>
+            </div>
+          </div>
         </div>
+        
         <div class="p-8">
           <h3 class="text-2xl font-bold mb-3 text-accent-orange group-hover:text-accent-orange/80 transition-colors">
             ${project.title}

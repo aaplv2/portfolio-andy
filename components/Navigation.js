@@ -15,7 +15,7 @@ export default function Navigation() {
   return (
     <nav className="container mx-auto px-6 py-4">
       <div className="flex justify-between items-center">
-        <div className="text-xl font-bold text-accent-orange">Portfolio</div>
+        <div className="text-xl font-bold text-accent-orange">Andy.</div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8">

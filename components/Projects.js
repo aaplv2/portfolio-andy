@@ -5,28 +5,28 @@ import ProjectCard from "./ui/ProjectCard";
 export default function Projects() {
   const projects = [
     {
-      title: "E-Commerce Platform",
+      title: "Archivo Jazz",
       description:
-        "A modern full-stack e-commerce solution with real-time inventory management, secure payments, and responsive design.",
-      url: "https://example-ecommerce.com",
-      image: "/placeholder.svg?height=250&width=400",
-      tech: ["React", "Node.js", "MongoDB", "Stripe"],
+        "A comprehensive jazz music archive platform featuring artist profiles, album collections, and interactive listening experiences with curated playlists.",
+      url: "https://example-archivo-jazz.com",
+      image: "/archivo-jazz.png",
+      tech: ["React", "Node.js", "MongoDB", "Audio API"],
     },
     {
-      title: "Task Management App",
+      title: "Birdex",
       description:
-        "Collaborative project management tool with real-time updates, team collaboration features, and intuitive drag-and-drop interface.",
-      url: "https://example-taskapp.com",
-      image: "/placeholder.svg?height=250&width=400",
-      tech: ["Vue.js", "Express", "Socket.io", "PostgreSQL"],
+        "Bird identification and tracking application with AI-powered species recognition, location mapping, and community-driven bird watching features.",
+      url: "https://example-birdex.com",
+      image: "/birdex.jpg",
+      tech: ["Vue.js", "Python", "TensorFlow", "PostgreSQL"],
     },
     {
-      title: "Weather Dashboard",
+      title: "School Management System",
       description:
-        "Interactive weather application with detailed forecasts, interactive maps, and customizable alerts for multiple locations.",
-      url: "https://example-weather.com",
-      image: "/placeholder.svg?height=250&width=400",
-      tech: ["Next.js", "TypeScript", "Chart.js", "Weather API"],
+        "Complete educational management platform with student enrollment, grade tracking, attendance monitoring, and parent-teacher communication tools.",
+      url: "https://example-school.com",
+      image: "/school.jpg",
+      tech: ["Next.js", "TypeScript", "Prisma", "MySQL"],
     },
   ];
 

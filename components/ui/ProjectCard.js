@@ -10,10 +10,35 @@ export default function ProjectCard({ title, description, url, image, tech, inde
       <div className="relative overflow-hidden">
         <img
           src={image || "/placeholder.svg"}
-          alt={title}
+          alt={`${title} project screenshot`}
           className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
+          loading="lazy"
+          onError={(e) => {
+            e.target.src = "/placeholder.svg?height=250&width=400"
+            e.target.alt = `${title} - Image not available`
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+        {/* Image overlay with project info */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="text-center text-white p-4">
+            <svg
+              className="w-12 h-12 mx-auto mb-2 text-accent-orange"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+            <p className="text-sm font-medium">View Project</p>
+          </div>
+        </div>
       </div>
 
       <div className="p-8">
