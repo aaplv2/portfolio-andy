@@ -14,7 +14,7 @@ export default function ContactInfo() {
         </svg>
       ),
       title: "Email",
-      content: "your.email@example.com",
+      content: "aaplv2@gmail.com",
       bgColor: "bg-accent-orange/20",
     },
     {
@@ -30,7 +30,7 @@ export default function ContactInfo() {
         </svg>
       ),
       title: "Location",
-      content: "Your City, Country",
+      content: "Santiago, Chile",
       bgColor: "bg-accent-blue/20",
     },
     {
@@ -45,7 +45,7 @@ export default function ContactInfo() {
         </svg>
       ),
       title: "Response Time",
-      content: "Usually within 24 hours",
+      content: "Within 24 hours",
       bgColor: "bg-accent-orange/20",
     },
   ]

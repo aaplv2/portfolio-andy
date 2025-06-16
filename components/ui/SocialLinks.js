@@ -3,7 +3,7 @@
 export default function SocialLinks() {
   const socialLinks = [
     {
-      href: "https://linkedin.com/in/yourprofile",
+      href: "https://www.linkedin.com/in/aaplsounddesign/",
       label: "LinkedIn Profile",
       icon: (
         <svg
@@ -16,7 +16,7 @@ export default function SocialLinks() {
       ),
     },
     {
-      href: "https://github.com/yourusername",
+      href: "https://github.com/aaplv2",
       label: "GitHub Profile",
       icon: (
         <svg

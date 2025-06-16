@@ -9,25 +9,25 @@ export default function Projects() {
       title: "Archivo Jazz",
       description:
         "A comprehensive jazz music archive platform featuring artist profiles, album collections, and interactive listening experiences with curated playlists.",
-      url: "https://example-archivo-jazz.com",
+      url: "https://archivo-jazz.vercel.app/",
       image: "/archivo-jazz.png",
-      tech: ["React", "Node.js", "MongoDB", "Audio API"],
+      tech: ["React", "Node.js", "Audio API"],
     },
     {
       title: "Birdex",
       description:
         "Bird identification and tracking application with AI-powered species recognition, location mapping, and community-driven bird watching features.",
-      url: "https://example-birdex.com",
+      url: "https://birddex.netlify.app/",
       image: "/birdex.jpg",
-      tech: ["Vue.js", "Python", "TensorFlow", "PostgreSQL"],
+      tech: ["Vue.js", "TensorFlow",  "Next.js"],
     },
     {
-      title: "School Management System",
+      title: "Swing Dance School",
       description:
-        "Complete educational management platform with student enrollment, grade tracking, attendance monitoring, and parent-teacher communication tools.",
-      url: "https://example-school.com",
+        "Spanish website for a fictional swing dance school. Front end design mostly to take an elegant approach to the digital experience.",
+      url: "https://school-website-rouge.vercel.app/",
       image: "/school.jpg",
-      tech: ["Next.js", "TypeScript", "Prisma", "MySQL"],
+      tech: ["Next.js", "Tailwindcss", "Animate"],
     },
   ];
 
