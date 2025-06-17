@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function ContactForm() {
   const [formStatus, setFormStatus] = useState({
@@ -8,6 +8,7 @@ export default function ContactForm() {
     type: "",
     visible: false,
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateField = (field) => {
     const value = field.value.trim();
@@ -64,6 +65,8 @@ export default function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (isSubmitting) return;
+
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
@@ -86,6 +89,7 @@ export default function ContactForm() {
       return;
     }
 
+    setIsSubmitting(true);
     setFormStatus({
       message: "Sending message...",
       type: "loading",
@@ -93,64 +97,51 @@ export default function ContactForm() {
     });
 
     try {
-      // Simulate form submission
-      await new Promise((resolve) => {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setFormStatus({
+          message: "Message sent successfully! I'll get back to you soon.",
+          type: "success",
+          visible: true,
+        });
+
+        e.target.reset();
+
+        // Clear all field validations
+        inputs.forEach((input) => {
+          clearFieldError(input);
+        });
+
         setTimeout(() => {
-          console.log("Form submitted:", data);
-          resolve();
-        }, 2000);
-      });
-
+          setFormStatus({ message: "", type: "", visible: false });
+        }, 5000);
+      } else {
+        throw new Error(result.error || "Failed to send message");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
       setFormStatus({
-        message: "Message sent successfully! I'll get back to you soon.",
-        type: "success",
+        message: error.message || "Failed to send message. Please try again.",
+        type: "error",
         visible: true,
-      });
-
-      e.target.reset();
-
-      // Clear all field validations
-      inputs.forEach((input) => {
-        clearFieldError(input);
       });
 
       setTimeout(() => {
         setFormStatus({ message: "", type: "", visible: false });
       }, 5000);
-    } catch (error) {
-      setFormStatus({
-        message: "Failed to send message. Please try again.",
-        type: "error",
-        visible: true,
-      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
-  useEffect(() => {
-    const form = document.getElementById("contact-form");
-    if (!form) return;
-
-    // Real-time validation
-    const handleFieldBlur = (e) => {
-      if (e.target.matches("input, textarea")) {
-        validateField(e.target);
-      }
-    };
-
-    const handleFieldInput = (e) => {
-      if (e.target.matches("input, textarea")) {
-        clearFieldError(e.target);
-      }
-    };
-
-    form.addEventListener("blur", handleFieldBlur, true);
-    form.addEventListener("input", handleFieldInput, true);
-
-    return () => {
-      form.removeEventListener("blur", handleFieldBlur, true);
-      form.removeEventListener("input", handleFieldInput, true);
-    };
-  }, []);
 
   const getStatusIcon = (type) => {
     const icons = {
@@ -218,7 +209,7 @@ export default function ContactForm() {
         <div className="grid md:grid-cols-2 gap-6">
           <div className="form-group">
             <label htmlFor="name" className="form-label">
-              Name
+              Name *
             </label>
             <input
               type="text"
@@ -227,11 +218,12 @@ export default function ContactForm() {
               required
               className="form-input"
               placeholder="Your name"
+              disabled={isSubmitting}
             />
           </div>
           <div className="form-group">
             <label htmlFor="email" className="form-label">
-              Email
+              Email *
             </label>
             <input
               type="email"
@@ -240,13 +232,14 @@ export default function ContactForm() {
               required
               className="form-input"
               placeholder="your@email.com"
+              disabled={isSubmitting}
             />
           </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="subject" className="form-label">
-            Subject
+            Subject *
           </label>
           <input
             type="text"
@@ -255,12 +248,13 @@ export default function ContactForm() {
             required
             className="form-input"
             placeholder="Project inquiry"
+            disabled={isSubmitting}
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="message" className="form-label">
-            Message
+            Message *
           </label>
           <textarea
             id="message"
@@ -269,24 +263,33 @@ export default function ContactForm() {
             required
             className="form-input resize-none"
             placeholder="Tell me about your project..."
+            disabled={isSubmitting}
           />
         </div>
 
-        <button type="submit" className="btn-primary w-full group">
-          <span>Send Message</span>
-          <svg
-            className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-            />
-          </svg>
+        <button
+          type="submit"
+          className={`btn-primary w-full group ${
+            isSubmitting ? "opacity-75 cursor-not-allowed" : ""
+          }`}
+          disabled={isSubmitting}
+        >
+          <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
+          {!isSubmitting && (
+            <svg
+              className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+              />
+            </svg>
+          )}
         </button>
       </form>
 
