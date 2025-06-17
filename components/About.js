@@ -108,7 +108,7 @@ export default function About() {
 
           <div className="prose prose-lg prose-invert mx-auto">
             <p className="text-xl text-gray-300 leading-relaxed mb-8">
-              I'm a web developer looking for expertise in modern web
+              I&apos;m a web developer looking for expertise in modern web
               technologies. I love creating clean, efficient, and user-friendly
               applications that solve real-world problems.
             </p>

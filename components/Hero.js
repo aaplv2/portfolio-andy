@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 import CVDownloadButtons from "./ui/CVDownloadButtons";
 import SocialLinks from "./ui/SocialLinks";
 import AnimatedBackground from "./ui/AnimatedBackground";
@@ -52,10 +53,14 @@ export default function Hero() {
       className="pt-20 min-h-screen flex items-center justify-center relative overflow-hidden"
     >
       <div className="absolute inset-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url(/cordillera.jpg)" }}
-        ></div>
+        <Image
+          src="/cordillera.jpg"
+          alt="Mountain landscape background"
+          fill
+          className="object-cover object-center"
+          priority
+          quality={85}
+        />
         <div className="absolute inset-0 bg-gradient-to-br from-gray-950/80 via-gray-900/70 to-gray-950/80"></div>
       </div>
 
@@ -66,12 +71,12 @@ export default function Hero() {
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
             <span className="text-white block">Hello, I'm</span>
             <span className="text-accent-orange block bg-gradient-to-r from-accent-orange to-accent-orange/80 bg-clip-text text-transparent">
-              Andrés Pardo
+              Your Name
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Web Developer / Sound Engineer
+            Full Stack Developer & Creative Problem Solver
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">

@@ -5,137 +5,104 @@ import ProjectCard from "./ui/ProjectCard";
 import ProjectCardSkeleton from "./ui/ProjectCardSkeleton";
 
 export default function Projects() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
+  const [projects, setProjects] = useState([])
 
   const projectsData = [
     {
       title: "Archivo Jazz",
       description:
-        "A comprehensive jazz music archive platform featuring artist profiles, album collections, and interactive listening experiences.",
-      url: "https://archivo-jazz.vercel.app/",
+        "A comprehensive jazz music archive platform featuring artist profiles, album collections, and interactive listening experiences with curated playlists.",
+      url: "https://example-archivo-jazz.com",
       image: "/archivo-jazz.png",
-      tech: ["React", "Node.js", "Audio API"],
+      tech: ["React", "Node.js", "MongoDB", "Audio API"],
     },
     {
       title: "Birdex",
       description:
-        "Bird identification and description across some of the landscapes of the world.",
-      url: "https://birddex.netlify.app/",
+        "Bird identification and tracking application with AI-powered species recognition, location mapping, and community-driven bird watching features.",
+      url: "https://example-birdex.com",
       image: "/birdex.jpg",
-      tech: ["Vue.js", "TensorFlow", "Next.js"],
+      tech: ["Vue.js", "Python", "TensorFlow", "PostgreSQL"],
     },
     {
-      title: "Swing Dance School",
+      title: "School Management System",
       description:
-        "Spanish website for a fictional swing dance school. Front end design mostly to take an elegant approach to the digital experience.",
-      url: "https://school-website-rouge.vercel.app/",
+        "Complete educational management platform with student enrollment, grade tracking, attendance monitoring, and parent-teacher communication tools.",
+      url: "https://example-school.com",
       image: "/school.jpg",
-      tech: ["Next.js", "Tailwindcss", "Animate"],
+      tech: ["Next.js", "TypeScript", "Prisma", "MySQL"],
     },
-  ];
+  ]
 
   useEffect(() => {
     // Simulate loading delay
     const loadProjects = async () => {
-      setIsLoading(true);
+      setIsLoading(true)
 
       // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      setProjects(projectsData);
-      setIsLoading(false);
-    };
+      setProjects(projectsData)
+      setIsLoading(false)
+    }
 
-    loadProjects();
+    loadProjects()
+  }, [])
 
+  useEffect(() => {
     // Intersection Observer for animations
     const observerOptions = {
       threshold: 0.1,
       rootMargin: "0px 0px -50px 0px",
-    };
+    }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("animate-fade-in-up");
+          entry.target.classList.add("animate-fade-in-up")
         }
-      });
-    }, observerOptions);
+      })
+    }, observerOptions)
 
-    // Observe projects section and project cards
-    const projectsSection = document.getElementById("projects");
+    // Observe projects section
+    const projectsSection = document.getElementById("projects")
+    if (projectsSection) observer.observe(projectsSection)
 
-    if (projectsSection) observer.observe(projectsSection);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
     // Re-observe project cards when they're loaded
     if (!isLoading) {
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in-up");
-          }
-        });
-      }, observerOptions);
-
-      const projectCards = document.querySelectorAll(".project-card");
-      projectCards.forEach((card) => observer.observe(card));
-
-      return () => {
-        observer.disconnect();
-      };
+      const projectCards = document.querySelectorAll(".project-card")
+      projectCards.forEach((card) => observer.observe(card))
     }
-  }, [isLoading]);
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [isLoading])
 
   return (
     <section id="projects" className="py-24 bg-gray-900">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-accent-blue">
-            Featured Projects
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-accent-blue">Featured Projects</h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Here are some of my recent projects that showcase my skills and
-            creativity
+            Here are some of my recent projects that showcase my skills and creativity
           </p>
         </div>
 
-        <div
-          id="projects-container"
-          className="grid lg:grid-cols-3 md:grid-cols-2 gap-8"
-        >
+        <div id="projects-container" className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
           {isLoading
             ? // Show skeleton cards while loading
-              Array.from({ length: 3 }, (_, index) => (
-                <ProjectCardSkeleton key={`skeleton-${index}`} index={index} />
-              ))
+              Array.from({ length: 3 }, (_, index) => <ProjectCardSkeleton key={`skeleton-${index}`} index={index} />)
             : // Show actual project cards when loaded
-              projects.map((project, index) => (
-                <ProjectCard key={index} {...project} index={index} />
-              ))}
+              projects.map((project, index) => <ProjectCard key={index} {...project} index={index} />)}
         </div>
 
         {/* Loading indicator */}
         {isLoading && (
           <div className="text-center mt-8">
             <div className="inline-flex items-center space-x-3 text-accent-orange">
-              <svg
-                className="animate-spin w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="animate-spin w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -149,5 +116,5 @@ export default function Projects() {
         )}
       </div>
     </section>
-  );
+  )
 }

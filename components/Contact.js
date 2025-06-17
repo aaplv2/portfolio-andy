@@ -44,7 +44,7 @@ export default function Contact() {
               Get In Touch
             </h2>
             <p className="text-xl text-gray-400">
-              Have a project in mind? Let's work together to bring your ideas to
+              Have a project in mind? Lets work together to bring your ideas to
               life
             </p>
           </div>

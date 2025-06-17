@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function ProjectCard({
   title,
   description,
@@ -17,16 +19,13 @@ export default function ProjectCard({
       className="project-card animate-fade-in-up flex flex-col h-full"
       style={{ animationDelay: `${index * 0.2}s` }}
     >
-      <div className="relative overflow-hidden">
-        <img
+      <div className="relative overflow-hidden h-56">
+        <Image
           src={image || "/placeholder.svg"}
           alt={`${title} project screenshot`}
-          className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
-          loading="lazy"
-          onError={(e) => {
-            e.target.src = "/placeholder.svg?height=250&width=400";
-            e.target.alt = `${title} - Image not available`;
-          }}
+          fill
+          className="object-cover group-hover:scale-110 transition-transform duration-500"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
