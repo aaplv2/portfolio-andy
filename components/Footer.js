@@ -14,7 +14,7 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-400 mb-4 md:mb-0">
-            <p>&copy; {currentYear} Your Name. All rights reserved.</p>
+            {/* <p>&copy; {currentYear} Your Name. All rights reserved.</p> */}
           </div>
 
           <div className="flex space-x-6">
