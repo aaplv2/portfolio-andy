@@ -293,6 +293,42 @@ html {
   animation: float 6s ease-in-out infinite;
 }
 
+/* Skeleton Loading Animation */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Shimmer effect for skeletons */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, rgb(55 65 81) 50%, transparent) 25%,
+    color-mix(in srgb, rgb(75 85 99) 50%, transparent) 50%,
+    color-mix(in srgb, rgb(55 65 81) 50%, transparent) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 /* Custom Animations */
 @keyframes fadeInUp {
   from {
@@ -312,16 +348,6 @@ html {
   }
   50% {
     transform: translateY(-20px);
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.8;
   }
 }
 
@@ -353,11 +379,6 @@ html {
 :focus-visible {
   outline: 2px solid var(--color-accent-orange);
   outline-offset: 2px;
-}
-
-/* Loading animation */
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* Error message styles */
