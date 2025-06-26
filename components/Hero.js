@@ -71,12 +71,12 @@ export default function Hero() {
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
             <span className="text-white block">Hello, I'm</span>
             <span className="text-accent-orange block bg-gradient-to-r from-accent-orange to-accent-orange/80 bg-clip-text text-transparent">
-              Your Name
+              Andrés Pardo
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Full Stack Developer & Creative Problem Solver
+            Full Stack Developer & Sound Engineer
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
