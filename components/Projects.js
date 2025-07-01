@@ -18,12 +18,12 @@ export default function Projects() {
       tech: ["React", "Node.js", "MongoDB", "Audio API"],
     },
     {
-      title: "Birdex",
+      title: "LindyPoh",
       description:
-        "Bird identification and tracking application with AI-powered species recognition, location mapping, and community-driven bird watching features.",
-      url: "https://example-birdex.com",
-      image: "/birdex.jpg",
-      tech: ["Vue.js", "Python", "TensorFlow", "PostgreSQL"],
+        "Main website for swing festival Lindy Poh. Designed on wix with Javascript. It features the main event activities like parties, courses, teachers, competitions and more. It allows the user to create a profile and sign up for the event. It also allows the staff for better management of the attendance.",
+      url: "https://www.parenteswing.org/",
+      image: "/lindypoh.png",
+      tech: ["Wix, Javascript"],
     },
     {
       title: "School Management System",
